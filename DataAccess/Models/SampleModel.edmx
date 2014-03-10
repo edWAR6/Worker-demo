@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SGA_EntrenamientoModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="SGA_EntrenamientoModelStoreContainer">
+          <EntitySet Name="A_Entrevistadores" EntityType="SGA_EntrenamientoModel.Store.A_Entrevistadores" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="A_Giras" EntityType="SGA_EntrenamientoModel.Store.A_Giras" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_A_Giras_A_Entrevistadores" Association="SGA_EntrenamientoModel.Store.FK_A_Giras_A_Entrevistadores">
+            <End Role="A_Entrevistadores" EntitySet="A_Entrevistadores" />
+            <End Role="A_Giras" EntitySet="A_Giras" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="A_Entrevistadores">
+          <Key>
+            <PropertyRef Name="ID_Persona" />
+          </Key>
+          <Property Name="ID_Persona" Type="int" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="A_Giras">
+          <Key>
+            <PropertyRef Name="Gira" />
+          </Key>
+          <Property Name="Gira" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Entrevistador" Type="int" />
+          <Property Name="FechaEntrega" Type="datetime" />
+          <Property Name="FechaGira" Type="datetime" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" />
+          <Property Name="Estado" Type="varchar" MaxLength="1" />
+        </EntityType>
+        <Association Name="FK_A_Giras_A_Entrevistadores">
+          <End Role="A_Entrevistadores" Type="SGA_EntrenamientoModel.Store.A_Entrevistadores" Multiplicity="0..1" />
+          <End Role="A_Giras" Type="SGA_EntrenamientoModel.Store.A_Giras" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="A_Entrevistadores">
+              <PropertyRef Name="ID_Persona" />
+            </Principal>
+            <Dependent Role="A_Giras">
+              <PropertyRef Name="Entrevistador" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SGA_EntrenamientoModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="SGA_EntrenamientoEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="A_Entrevistadores" EntityType="SGA_EntrenamientoModel.A_Entrevistadores" />
+          <EntitySet Name="A_Giras" EntityType="SGA_EntrenamientoModel.A_Giras" />
+          <AssociationSet Name="FK_A_Giras_A_Entrevistadores" Association="SGA_EntrenamientoModel.FK_A_Giras_A_Entrevistadores">
+            <End Role="A_Entrevistadores" EntitySet="A_Entrevistadores" />
+            <End Role="A_Giras" EntitySet="A_Giras" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="A_Entrevistadores">
+          <Key>
+            <PropertyRef Name="ID_Persona" />
+          </Key>
+          <Property Name="ID_Persona" Type="Int32" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="A_Giras" Relationship="SGA_EntrenamientoModel.FK_A_Giras_A_Entrevistadores" FromRole="A_Entrevistadores" ToRole="A_Giras" />
+        </EntityType>
+        <EntityType Name="A_Giras">
+          <Key>
+            <PropertyRef Name="Gira" />
+          </Key>
+          <Property Name="Gira" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Entrevistador" Type="Int32" />
+          <Property Name="FechaEntrega" Type="DateTime" Precision="3" />
+          <Property Name="FechaGira" Type="DateTime" Precision="3" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Estado" Type="String" MaxLength="1" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="A_Entrevistadores" Relationship="SGA_EntrenamientoModel.FK_A_Giras_A_Entrevistadores" FromRole="A_Giras" ToRole="A_Entrevistadores" />
+        </EntityType>
+        <Association Name="FK_A_Giras_A_Entrevistadores">
+          <End Role="A_Entrevistadores" Type="SGA_EntrenamientoModel.A_Entrevistadores" Multiplicity="0..1" />
+          <End Role="A_Giras" Type="SGA_EntrenamientoModel.A_Giras" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="A_Entrevistadores">
+              <PropertyRef Name="ID_Persona" />
+            </Principal>
+            <Dependent Role="A_Giras">
+              <PropertyRef Name="Entrevistador" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SGA_EntrenamientoModelStoreContainer" CdmEntityContainer="SGA_EntrenamientoEntities">
+          <EntitySetMapping Name="A_Entrevistadores">
+            <EntityTypeMapping TypeName="SGA_EntrenamientoModel.A_Entrevistadores">
+              <MappingFragment StoreEntitySet="A_Entrevistadores">
+                <ScalarProperty Name="ID_Persona" ColumnName="ID_Persona" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="A_Giras">
+            <EntityTypeMapping TypeName="SGA_EntrenamientoModel.A_Giras">
+              <MappingFragment StoreEntitySet="A_Giras">
+                <ScalarProperty Name="Gira" ColumnName="Gira" />
+                <ScalarProperty Name="Entrevistador" ColumnName="Entrevistador" />
+                <ScalarProperty Name="FechaEntrega" ColumnName="FechaEntrega" />
+                <ScalarProperty Name="FechaGira" ColumnName="FechaGira" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
